@@ -12,6 +12,7 @@ const flavors = [
   "grayscale",
 ];
 
+const styles: string[] = [];
 for (const lang of languages) {
   for (const flavor of flavors) {
     const style = {
@@ -27,6 +28,13 @@ for (const lang of languages) {
       },
       layers: layers("osm",namedFlavor(flavor),{lang})
     };
-    writeFileSync(`./styles/${lang}-${flavor}.json`, JSON.stringify(style));
+    const styleName = `osm-${lang}-${flavor}`;
+    writeFileSync(`./styles/${styleName}.json`, JSON.stringify(style));
+    styles.push(styleName);
   }
 }
+
+writeFileSync(
+  "./styles/styles.json",
+  JSON.stringify(styles),
+);
