@@ -3,6 +3,7 @@ import { writeFileSync } from 'node:fs';
 
 const languages = [
   "ja",
+  "en",
 ];
 const flavors = [
   "light",
