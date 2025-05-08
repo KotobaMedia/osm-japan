@@ -1,5 +1,5 @@
 import { layers, namedFlavor } from '@protomaps/basemaps';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readdirSync } from 'node:fs';
 
 const languages = [
   "ja",
@@ -13,7 +13,6 @@ const flavors = [
   "grayscale",
 ];
 
-const styles: string[] = [];
 for (const lang of languages) {
   for (const flavor of flavors) {
     const style = {
@@ -31,11 +30,15 @@ for (const lang of languages) {
     };
     const styleName = `osm-${lang}-${flavor}`;
     writeFileSync(`./styles/${styleName}.json`, JSON.stringify(style));
-    styles.push(styleName);
   }
 }
 
+// Build styles array by reading directory contents
+const styles = readdirSync('./styles')
+  .filter(file => file !== 'styles.json')
+  .map(file => file.replace('.json', ''));
+
 writeFileSync(
   "./styles/styles.json",
-  JSON.stringify(styles),
+  JSON.stringify(styles, null, 2),
 );

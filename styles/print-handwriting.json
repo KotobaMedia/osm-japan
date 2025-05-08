@@ -1,0 +1,123 @@
+{
+  "version": 8,
+  "name": "印刷・手書き用",
+  "id": "print-handwriting",
+  "metadata": {"maputnik:renderer": "mlgljs"},
+  "sources": {
+    "basemap": {
+      "type": "vector",
+      "url": "https://tiles.kmproj.com/osm-japan.json"
+    }
+  },
+  "sprite": "",
+  "glyphs": "https://kotobamedia.github.io/klokantech-gl-fonts/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {"background-color": "rgba(255, 255, 255, 1)"}
+    },
+    {
+      "id": "water-ocean",
+      "type": "fill",
+      "source": "basemap",
+      "source-layer": "water",
+      "filter": [
+        "all",
+        ["==", "$type", "Polygon"],
+        ["in", "kind", "water", "ocean"]
+      ],
+      "paint": {"fill-color": "rgba(196, 196, 196, 1)"}
+    },
+    {
+      "id": "water-river-lines",
+      "type": "line",
+      "source": "basemap",
+      "source-layer": "water",
+      "filter": ["all", ["in", "$type", "LineString"], ["==", "kind", "river"]],
+      "paint": {"line-color": "rgba(196, 196, 196, 1)"}
+    },
+    {
+      "id": "road-major-primary",
+      "type": "line",
+      "source": "basemap",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        ["==", "$type", "LineString"],
+        ["==", "kind", "major_road"],
+        ["in", "kind_detail", "primary", "trunk"]
+      ],
+      "paint": {
+        "line-width": {"stops": [[6, 0.1], [14, 5]]},
+        "line-gap-width": 0,
+        "line-translate-anchor": "map"
+      }
+    },
+    {
+      "id": "road-major-tertiary",
+      "type": "line",
+      "source": "basemap",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        ["==", "$type", "LineString"],
+        ["==", "kind", "major_road"],
+        ["in", "kind_detail", "tertiary", "secondary"]
+      ],
+      "paint": {
+        "line-width": {"stops": [[6, 0.1], [14, 2]]},
+        "line-color": "rgba(56, 56, 56, 1)"
+      }
+    },
+    {
+      "id": "road-minor",
+      "type": "line",
+      "source": "basemap",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        ["==", "$type", "LineString"],
+        ["==", "kind", "minor_road"]
+      ],
+      "paint": {
+        "line-width": {"stops": [[12, 0], [14, 0.5], [18, 1.5]]},
+        "line-color": "rgba(56, 56, 56, 1)"
+      }
+    },
+    {
+      "id": "road-path",
+      "type": "line",
+      "source": "basemap",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        ["==", "$type", "LineString"],
+        ["==", "kind", "path"],
+        ["!in", "kind_detail", "sidewalk", "crossing"]
+      ],
+      "paint": {
+        "line-width": {"stops": [[12, 0], [14, 0.5], [18, 1]]},
+        "line-color": "rgba(56, 56, 56, 1)",
+        "line-dasharray": [6, 6]
+      }
+    },
+    {
+      "id": "building-fill",
+      "type": "fill",
+      "source": "basemap",
+      "source-layer": "buildings",
+      "paint": {"fill-color": "rgba(243, 243, 243, 1)"}
+    },
+    {
+      "id": "building-outline",
+      "type": "line",
+      "source": "basemap",
+      "source-layer": "buildings",
+      "paint": {
+        "line-color": "rgba(0, 0, 0, 1)",
+        "line-width": {"stops": [[13, 0.1], [18, 1]]}
+      }
+    }
+  ]
+}
