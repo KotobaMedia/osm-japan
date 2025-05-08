@@ -29,7 +29,7 @@ for (const lang of languages) {
       layers: layers("osm",namedFlavor(flavor),{lang})
     };
     const styleName = `osm-${lang}-${flavor}`;
-    writeFileSync(`./styles/${styleName}.json`, JSON.stringify(style));
+    writeFileSync(`./styles/${styleName}.json`, JSON.stringify(style, null, 2));
   }
 }
 
