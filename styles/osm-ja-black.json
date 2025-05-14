@@ -1683,9 +1683,17 @@
       "source": "osm",
       "source-layer": "boundaries",
       "filter": [
-        "<=",
-        "kind_detail",
-        2
+        "all",
+        [
+          "<=",
+          "kind_detail",
+          2
+        ],
+        [
+          "!=",
+          "disputed",
+          true
+        ]
       ],
       "paint": {
         "line-color": "#707070",

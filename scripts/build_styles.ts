@@ -15,6 +15,17 @@ const flavors = [
 
 for (const lang of languages) {
   for (const flavor of flavors) {
+    const styleLayers = layers("osm",namedFlavor(flavor),{lang})
+      .map((layer) => {
+        if (layer.id === "boundaries_country") {
+          layer.filter = [
+            "all",
+            ["<=", "kind_detail", 2],
+            ["!=", "disputed", true]
+          ];
+        }
+        return layer;
+      });
     const style = {
       version: 8,
       glyphs:'https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
@@ -26,7 +37,7 @@ for (const lang of languages) {
           attribution: '<a href="https://protomaps.com">Protomaps</a> © <a href="https://openstreetmap.org">OpenStreetMap</a>'
         },
       },
-      layers: layers("osm",namedFlavor(flavor),{lang})
+      layers: styleLayers,
     };
     const styleName = `osm-${lang}-${flavor}`;
     writeFileSync(`./styles/${styleName}.json`, JSON.stringify(style, null, 2));
