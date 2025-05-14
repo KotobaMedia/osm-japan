@@ -13,4 +13,4 @@ echo "Latest version of basetiles: $LATEST_VERSION"
 
 PMTILES_URL="https://build.protomaps.com/$LATEST_VERSION"
 
-pmtiles extract "$PMTILES_URL" osm-japan.pmtiles --region "./data/geofabrik-japan.geojson" --download-threads=10 --overfetch=0.1
+pmtiles extract "$PMTILES_URL" osm-japan.pmtiles --region "./data/japan-bbox.geojson" --download-threads=10 --overfetch=0.1
