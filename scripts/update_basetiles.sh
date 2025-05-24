@@ -14,3 +14,12 @@ echo "Latest version of basetiles: $LATEST_VERSION"
 PMTILES_URL="https://build.protomaps.com/$LATEST_VERSION"
 
 pmtiles extract "$PMTILES_URL" osm-japan.pmtiles --region "./data/japan-bbox.geojson" --download-threads=10 --overfetch=0.1
+
+mvt-wrangler \
+  osm-japan.pmtiles \
+  osm-japan-filtered.mbtiles \
+  --filter ./data/osm-mvt-wrangler-filter.geojson
+
+pmtiles convert \
+  osm-japan-filtered.mbtiles \
+  osm-japan-filtered.pmtiles
