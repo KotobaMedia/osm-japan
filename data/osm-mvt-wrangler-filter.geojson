@@ -22,7 +22,7 @@
             "tag": [
               "any",
               ["starts-with", ["key"], "name"],
-              "==", ["key"], "script"
+              ["==", ["key"], "script"]
             ]
           },
           "pois": {
@@ -108,8 +108,7 @@
                     ["literal", ["", "ja", "en"]]
                   ]
                 ]
-              ],
-              ["==", ["key"], "script"]
+              ]
             ]
           }
         }
