@@ -35,7 +35,8 @@
             "feature": [
               "any",
               [
-                "not", [
+                "not",
+                [
                   "in",
                   ["tag", "kind"],
                   ["literal", ["grassland", "wood", "wetland"]]
@@ -91,6 +92,137 @@
     {
       "type": "Feature",
       "properties": {
+        "name": "竹島",
+        "layers": {
+          "boundaries": {
+            "feature": ["boolean", true]
+          },
+          "roads": {
+            "feature": ["boolean", true]
+          },
+          "buildings": {
+            "feature": ["boolean", true]
+          },
+          "pois": {
+            "feature": ["boolean", true]
+          },
+          "places": {
+            "feature": ["boolean", true]
+          },
+          "landuse": {
+            "feature": ["boolean", true]
+          },
+          "earth": {
+            "feature": ["any", ["==", ["type"], "Point"]],
+            "tag": [
+              "any",
+              ["starts-with", ["key"], "name"],
+              ["==", ["key"], "script"]
+            ]
+          },
+          "water": {
+            "feature": [
+              "any",
+              ["==", ["type"], "Point"],
+              ["==", ["tag", "kind"], "reef"]
+            ],
+            "tag": [
+              "any",
+              ["starts-with", ["key"], "name"],
+              ["==", ["key"], "script"]
+            ]
+          }
+        }
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [131.8282348633973, 37.26593865683557],
+            [131.8282348633973, 37.21215681083642],
+            [131.9075383340127, 37.21215681083642],
+            [131.9075383340127, 37.26593865683557],
+            [131.8282348633973, 37.26593865683557]
+          ]
+        ],
+        "type": "Polygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "尖閣諸島",
+        "layers": {
+          "boundaries": {
+            "feature": ["boolean", true]
+          },
+          "roads": {
+            "feature": ["boolean", true]
+          },
+          "buildings": {
+            "feature": ["boolean", true]
+          },
+          "pois": {
+            "feature": ["boolean", true]
+          },
+          "places": {
+            "feature": ["boolean", true]
+          },
+          "landuse": {
+            "feature": ["boolean", true]
+          },
+          "earth": {
+            "feature": [
+              "any",
+              ["==", ["type"], "Point"]
+            ],
+            "tag": [
+              "any",
+              ["starts-with", ["key"], "name"],
+              ["==", ["key"], "script"]
+            ]
+          },
+          "water": {
+            "feature": [
+              "any",
+              ["==", ["type"], "Point"]
+            ],
+            "tag": [
+              "any",
+              ["starts-with", ["key"], "name"],
+              ["==", ["key"], "script"]
+            ]
+          }
+        }
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              [124.55425846128088, 25.92438519860697],
+              [124.55425846128088, 25.91988896432767],
+              [124.56198750316685, 25.91988896432767],
+              [124.56198750316685, 25.92438519860697],
+              [124.55425846128088, 25.92438519860697]
+            ]
+          ],
+          [
+            [
+              [123.44283846613786, 25.776095961722064],
+              [123.42754293304131, 25.73015068124262],
+              [123.56998720549387, 25.705688733138928],
+              [123.7072095041222, 25.92501249296525],
+              [123.66887560891848, 25.945910083945236],
+              [123.5368309378124, 25.752521330043407],
+              [123.44283846613786, 25.776095961722064]
+            ]
+          ]
+        ],
+        "type": "MultiPolygon"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "全世界",
         "layers": {
           "*": {
@@ -105,7 +237,7 @@
                   [
                     "in",
                     ["regex-capture", ["key"], "^name:?(.*)$", 1],
-                    ["literal", ["", "ja", "en"]]
+                    ["literal", ["", "ja", "en", "2"]]
                   ]
                 ]
               ]
