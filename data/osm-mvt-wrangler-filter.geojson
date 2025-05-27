@@ -240,6 +240,16 @@
                     ["literal", ["", "ja", "en", "2"]]
                   ]
                 ]
+              ],
+              [
+                "all",
+                ["==", ["key"], "name2"],
+                ["==", ["tag", "script2"], "Cyrillic"]
+              ],
+              [
+                "all",
+                ["==", ["key"], "script2"],
+                ["==", ["tag", "script2"], "Cyrillic"]
               ]
             ]
           }
