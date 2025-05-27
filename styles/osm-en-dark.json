@@ -1,12 +1,12 @@
 {
   "version": 8,
-  "glyphs": "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-  "sprite": "https://protomaps.github.io/basemaps-assets/sprites/v4/light",
+  "glyphs": "https://kotobamedia.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
+  "sprite": "https://kotobamedia.github.io/basemaps-assets/sprites/v4/dark",
   "sources": {
     "osm": {
       "type": "vector",
       "url": "https://tiles.kmproj.com/osm-japan.json",
-      "attribution": "<a href=\"https://protomaps.com\">Protomaps</a> © <a href=\"https://openstreetmap.org\">OpenStreetMap</a>"
+      "attribution": "© <a href=\"https://openstreetmap.org\">OpenStreetMap</a>"
     }
   },
   "layers": [
