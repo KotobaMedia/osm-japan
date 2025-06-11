@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+# See: https://maps.protomaps.com/builds/
 # This script downloads the latest basetiles from Protomaps and extracts Japan
 BUILD_URL="https://build-metadata.protomaps.dev/builds.json"
 
