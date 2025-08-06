@@ -1,6 +1,6 @@
 # osm-japan
 
-KotobaMedia serves some basemap tiles based on Protomaps' daily builds.
+KotobaMedia serves some basemap tiles based on [Protomaps' daily builds](https://maps.protomaps.com/builds/).
 This repository manages the generation and styling of these base maps.
 
 [mvt-wrangler](https://github.com/KotobaMedia/mvt-wrangler/) is used to perform filtering on the
