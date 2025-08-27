@@ -26,6 +26,28 @@ for (const lang of languages) {
         }
         return layer;
       });
+    const waterLayerIdx = styleLayers.findIndex(l => l.id === 'water');
+    styleLayers.splice(waterLayerIdx, 0, {
+      id: "hillshade",
+      type: "hillshade",
+      source: "dem",
+      paint: {
+        'hillshade-method': 'standard',
+        'hillshade-exaggeration': [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          0.4,
+          6,
+          0.2,
+          10,
+          0.1,
+          15,
+          0.05
+        ],
+      }
+    });
     const style = {
       version: 8,
       glyphs:'https://kotobamedia.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
@@ -36,6 +58,15 @@ for (const lang of languages) {
           url: "https://tiles.kmproj.com/osm-japan.json",
           attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>'
         },
+        "dem": {
+          type: "raster-dem",
+          tiles: [
+            "https://gbank.gsj.jp/seamless/elev/terrainRGB/mixed/{z}/{y}/{x}.png"
+          ],
+          minzoom: 0,
+          maxzoom: 14,
+          tileSize: 256,
+        }
       },
       layers: styleLayers,
     };
