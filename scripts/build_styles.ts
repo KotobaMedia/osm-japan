@@ -60,9 +60,7 @@ for (const lang of languages) {
         },
         "dem": {
           type: "raster-dem",
-          tiles: [
-            "https://gbank.gsj.jp/seamless/elev/terrainRGB/mixed/{z}/{y}/{x}.png"
-          ],
+          url: "https://tiles.kmproj.com/terrain_rgb_aist_gsj_dem_land.json",
           minzoom: 0,
           maxzoom: 14,
           tileSize: 256,
