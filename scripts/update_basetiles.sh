@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
+OUT="$(realpath "${1:-./osm-japan-filtered.pmtiles}")"
 cd "$(dirname "$0")"/..
 
-OUT="${1:-./osm-japan-filtered.pmtiles}"
 echo "Output file: $OUT"
 
 # See: https://maps.protomaps.com/builds/
