@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+cd "$(dirname "$0")"/..
+
+OUT="${1:-./osm-japan-filtered.pmtiles}"
+echo "Output file: $OUT"
+
 # See: https://maps.protomaps.com/builds/
 # This script downloads the latest basetiles from Protomaps and extracts Japan
 BUILD_URL="https://build-metadata.protomaps.dev/builds.json"
@@ -18,9 +23,7 @@ pmtiles extract "$PMTILES_URL" osm-japan.pmtiles --region "./data/japan-bbox.geo
 
 mvt-wrangler \
   osm-japan.pmtiles \
-  osm-japan-filtered.mbtiles \
-  --filter ./data/osm-mvt-wrangler-filter.geojson
-
-pmtiles convert \
-  osm-japan-filtered.mbtiles \
-  osm-japan-filtered.pmtiles
+  "$OUT" \
+  --filter ./data/osm-mvt-wrangler-filter.geojson \
+  --name "KotobaMedia Basemap (Japan)" \
+  --description "Basemap based on OpenStreetMap data, derived from Protomaps basemap tiles, filtered and adjusted for Japanese use."
