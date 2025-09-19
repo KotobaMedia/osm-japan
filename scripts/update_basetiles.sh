@@ -16,6 +16,9 @@ if [ -z "$LATEST_VERSION" ]; then
     exit 1
 fi
 echo "Latest version of basetiles: $LATEST_VERSION"
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  echo "latest_version=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+fi
 
 PMTILES_URL="https://build.protomaps.com/$LATEST_VERSION"
 
