@@ -55,12 +55,12 @@ for (const lang of languages) {
       sources: {
         "osm": {
           type: "vector",
-          url: "https://tiles.km-cdn.net/osm-japan",
+          url: "https://tiles.kmproj.com/osm-japan.json",
           attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>'
         },
         "dem": {
           type: "raster-dem",
-          url: "https://tiles.km-cdn.net/aist_gsj_dem_jpland_trgb",
+          url: "https://tiles.kmproj.com/aist-gsj-dem-jpland-trgb.json",
           minzoom: 0,
           maxzoom: 14,
           tileSize: 256,
