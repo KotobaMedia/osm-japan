@@ -10,10 +10,14 @@
     },
     "dem": {
       "type": "raster-dem",
-      "url": "https://tiles.kmproj.com/aist-gsj-dem-jpland-trgb.json",
+      "attribution": "<a href=\"https://tiles.kmproj.com/attribution\">Attribution</a>",
+      "tiles": [
+        "https://tiles.mapterhorn.com/{z}/{x}/{y}.webp"
+      ],
+      "encoding": "terrarium",
       "minzoom": 0,
       "maxzoom": 14,
-      "tileSize": 256
+      "tileSize": 512
     }
   },
   "layers": [

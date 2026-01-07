@@ -50,7 +50,7 @@ for (const lang of languages) {
     });
     const style = {
       version: 8,
-      glyphs:'https://kotobamedia.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
+      glyphs: 'https://kotobamedia.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
       sprite: `https://kotobamedia.github.io/basemaps-assets/sprites/v4/${flavor}`,
       sources: {
         "osm": {
@@ -60,10 +60,12 @@ for (const lang of languages) {
         },
         "dem": {
           type: "raster-dem",
-          url: "https://tiles.kmproj.com/aist-gsj-dem-jpland-trgb.json",
+          attribution: "<a href=\"https://tiles.kmproj.com/attribution\">Attribution</a>",
+          tiles: ["https://tiles.mapterhorn.com/{z}/{x}/{y}.webp"],
+          encoding: "terrarium",
           minzoom: 0,
           maxzoom: 14,
-          tileSize: 256,
+          tileSize: 512,
         }
       },
       layers: styleLayers,
