@@ -26,6 +26,249 @@ for (const lang of languages) {
         }
         return layer;
       });
+    const shouldPatchRails = flavor === "light" || flavor === "dark";
+    if (shouldPatchRails) {
+      const isDark = flavor === "dark";
+      const nameField = `name:${lang}`;
+      const railGenericColor = isDark ? "#5f5f5f" : "#6f6f6f";
+      const railFillColor = isDark ? "#767676" : "#8a8a8a";
+      const railBgColor = isDark ? "#e0e0e0" : "#ffffff";
+      const shinkansenColor = isDark ? "#1976d2" : "#1e88e5";
+      const railLabelTextColor = isDark ? "#7a7a7a" : "#4a4a4a";
+      const railLabelHaloColor = isDark ? "#212121" : "#ffffff";
+      const widthExpr = (minWidth: number, maxWidth: number) => [
+        "interpolate",
+        ["exponential", 1.6],
+        ["zoom"],
+        6,
+        minWidth,
+        18,
+        maxWidth
+      ];
+      const railFilter = (...conditions: unknown[]) => [
+        "all",
+        ["==", "kind", "rail"],
+        ["in", "kind_detail", "rail", "subway"],
+        ...conditions
+      ];
+      const nonServiceFilter = ["!has", "service"];
+      const serviceFilter = ["has", "service"];
+      const jrFilter = ["==", "is_jr", true];
+      const genericFilter = [
+        "any",
+        ["!has", "is_jr"],
+        ["==", "is_jr", false]
+      ];
+      const nonHighspeedFilter = [
+        "any",
+        ["!has", "highspeed"],
+        ["!=", "highspeed", "yes"]
+      ];
+      const shinkansenFilter = ["==", "highspeed", "yes"];
+      const railLayers = [
+        {
+          id: "roads_rail_generic",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, genericFilter),
+          paint: {
+            "line-color": railGenericColor,
+            "line-width": widthExpr(0.3, 10)
+          }
+        },
+        {
+          id: "roads_rail_generic_service",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          minzoom: 14,
+          filter: railFilter(serviceFilter, genericFilter),
+          paint: {
+            "line-color": railGenericColor,
+            "line-width": widthExpr(0.3, 4.5)
+          }
+        },
+        {
+          id: "roads_rail_jr_casing",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
+          paint: {
+            "line-color": railFillColor,
+            "line-width": widthExpr(1.5, 13)
+          },
+          layout: {
+            visibility: "visible"
+          }
+        },
+        {
+          id: "roads_rail_jr_bg",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
+          paint: {
+            "line-color": railBgColor,
+            "line-width": widthExpr(1, 9)
+          },
+          layout: {
+            visibility: "visible"
+          }
+        },
+        {
+          id: "roads_rail_jr",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
+          paint: {
+            "line-dasharray": ["literal", [8, 8]],
+            "line-color": railFillColor,
+            "line-width": widthExpr(1.5, 13)
+          }
+        },
+        {
+          id: "roads_rail_jr_shinkansen_casing",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, jrFilter, shinkansenFilter),
+          paint: {
+            "line-color": shinkansenColor,
+            "line-width": widthExpr(1.5, 13)
+          },
+          layout: {
+            visibility: "visible"
+          }
+        },
+        {
+          id: "roads_rail_jr_shinkansen_bg",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, jrFilter, shinkansenFilter),
+          paint: {
+            "line-color": railBgColor,
+            "line-width": widthExpr(1, 9)
+          },
+          layout: {
+            visibility: "visible"
+          }
+        },
+        {
+          id: "roads_rail_jr_shinkansen",
+          type: "line",
+          source: "osm",
+          "source-layer": "roads",
+          filter: railFilter(nonServiceFilter, jrFilter, shinkansenFilter),
+          paint: {
+            "line-dasharray": ["literal", [8, 8]],
+            "line-color": shinkansenColor,
+            "line-width": widthExpr(1.5, 13)
+          }
+        },
+      ];
+      const railLayerIdx = styleLayers.findIndex((layer) => layer.id === "roads_rail");
+      if (railLayerIdx !== -1) {
+        styleLayers.splice(railLayerIdx, 1, ...railLayers);
+      }
+      const railLabelLayerIdx = styleLayers.findIndex((layer) => layer.id === "roads_labels_major");
+      if (railLabelLayerIdx !== -1 && !styleLayers.some((layer) => layer.id === "roads_labels_rail")) {
+        styleLayers.splice(railLabelLayerIdx, 0, {
+          id: "roads_labels_rail",
+          type: "symbol",
+          source: "osm",
+          "source-layer": "roads",
+          minzoom: 11,
+          filter: [
+            "all",
+            ["==", "kind", "rail"],
+            ["==", "kind_detail", "rail"],
+            ["!has", "service"],
+            [
+              "any",
+              ["has", nameField],
+              ["has", "name"]
+            ]
+          ],
+          layout: {
+            "symbol-placement": "line",
+            "text-font": ["Noto Sans Regular"],
+            "text-field": [
+              "coalesce",
+              ["get", nameField],
+              ["get", "name"]
+            ],
+            "text-size": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              11,
+              10,
+              14,
+              12,
+              18,
+              14
+            ],
+            "text-letter-spacing": 0.1
+          },
+        paint: {
+          "text-color": railLabelTextColor,
+          "text-halo-color": railLabelHaloColor,
+          "text-halo-width": 1
+        }
+        });
+      }
+    }
+    const poiLayerIdx = styleLayers.findIndex((layer) => layer.id === "pois");
+    if (poiLayerIdx !== -1 && !styleLayers.some((layer) => layer.id === "pois_station")) {
+      const poiLayer = styleLayers[poiLayerIdx];
+      const stationLayer = JSON.parse(JSON.stringify(poiLayer));
+      stationLayer.id = "pois_station";
+      const poiFilter = poiLayer.filter;
+      const poiConditions = Array.isArray(poiFilter) && poiFilter[0] === "all"
+        ? poiFilter.slice(1)
+        : (poiFilter ? [poiFilter] : []);
+      const stationConditions = poiConditions.filter((condition) => {
+        return !(
+          Array.isArray(condition) &&
+          condition[0] === "in" &&
+          Array.isArray(condition[1]) &&
+          condition[1][0] === "get" &&
+          condition[1][1] === "kind"
+        );
+      });
+      stationLayer.filter = [
+        "all",
+        ["==", ["get", "kind"], ["literal", "station"]],
+        ...stationConditions
+      ];
+      for (const condition of poiConditions) {
+        if (
+          Array.isArray(condition) &&
+          condition[0] === "in" &&
+          Array.isArray(condition[1]) &&
+          condition[1][0] === "get" &&
+          condition[1][1] === "kind" &&
+          Array.isArray(condition[2]) &&
+          condition[2][0] === "literal" &&
+          Array.isArray(condition[2][1])
+        ) {
+          condition[2][1] = condition[2][1].filter((value) => value !== "station");
+        }
+      }
+      let lastPlacesIdx = -1;
+      for (let i = 0; i < styleLayers.length; i += 1) {
+        const layerId = styleLayers[i]?.id;
+        if (typeof layerId === "string" && layerId.startsWith("places_")) {
+          lastPlacesIdx = i;
+        }
+      }
+      const insertIdx = lastPlacesIdx !== -1 ? lastPlacesIdx + 1 : poiLayerIdx + 1;
+      styleLayers.splice(insertIdx, 0, stationLayer);
+    }
     const waterLayerIdx = styleLayers.findIndex(l => l.id === 'water');
     styleLayers.splice(waterLayerIdx, 0, {
       id: "hillshade",
