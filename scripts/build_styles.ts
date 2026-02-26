@@ -169,7 +169,7 @@ for (const lang of languages) {
           "source-layer": "roads",
           filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
           paint: {
-            "line-dasharray": ["literal", [8, 8]],
+            "line-dasharray": ["literal", [5, 5]],
             "line-color": railFillColor,
             "line-width": widthExpr(1.5, 13)
           }

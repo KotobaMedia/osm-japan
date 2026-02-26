@@ -2452,8 +2452,8 @@
         "line-dasharray": [
           "literal",
           [
-            8,
-            8
+            5,
+            5
           ]
         ],
         "line-color": "#8a8a8a",
