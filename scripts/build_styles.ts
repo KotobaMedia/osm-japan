@@ -1,6 +1,9 @@
 import { layers, namedFlavor } from '@protomaps/basemaps';
 import { writeFileSync, readdirSync } from 'node:fs';
 
+type StyleLayer = Record<string, any>;
+type RoadContext = "surface" | "tunnel" | "bridge";
+
 const languages = [
   "ja",
   "en",
@@ -13,9 +16,51 @@ const flavors = [
   "grayscale",
 ];
 
+const deepClone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
+
+const buildMotorwayFilter = (context: RoadContext, isLink: boolean): unknown[] => {
+  const filter: unknown[] = ["all"];
+  if (context === "surface") {
+    filter.push(["!has", "is_tunnel"], ["!has", "is_bridge"]);
+  } else if (context === "tunnel") {
+    filter.push(["has", "is_tunnel"]);
+  } else {
+    filter.push(["has", "is_bridge"]);
+  }
+  filter.push(["==", "kind", "highway"]);
+  filter.push(["==", "kind_detail", isLink ? "motorway_link" : "motorway"]);
+  filter.push(isLink ? ["has", "is_link"] : ["!has", "is_link"]);
+  return filter;
+};
+
+const insertDerivedRoadLayer = (
+  styleLayers: StyleLayer[],
+  sourceId: string,
+  id: string,
+  color: string,
+  filter: unknown[]
+): boolean => {
+  if (styleLayers.some((layer) => layer.id === id)) {
+    return true;
+  }
+  const sourceIdx = styleLayers.findIndex((layer) => layer.id === sourceId);
+  if (sourceIdx === -1) {
+    return false;
+  }
+  const derivedLayer = deepClone(styleLayers[sourceIdx]);
+  derivedLayer.id = id;
+  derivedLayer.filter = filter;
+  derivedLayer.paint = {
+    ...derivedLayer.paint,
+    "line-color": color
+  };
+  styleLayers.splice(sourceIdx + 1, 0, derivedLayer);
+  return true;
+};
+
 for (const lang of languages) {
   for (const flavor of flavors) {
-    const styleLayers = layers("osm",namedFlavor(flavor),{lang})
+    const styleLayers: StyleLayer[] = layers("osm",namedFlavor(flavor),{lang})
       .map((layer) => {
         if (layer.id === "boundaries_country") {
           layer.filter = [
@@ -26,9 +71,9 @@ for (const lang of languages) {
         }
         return layer;
       });
+    const isDark = flavor === "dark";
     const shouldPatchRails = flavor === "light" || flavor === "dark";
     if (shouldPatchRails) {
-      const isDark = flavor === "dark";
       const nameField = `name:${lang}`;
       const railGenericColor = isDark ? "#5f5f5f" : "#6f6f6f";
       const railFillColor = isDark ? "#767676" : "#8a8a8a";
@@ -220,6 +265,133 @@ for (const lang of languages) {
           "text-halo-width": 1
         }
         });
+      }
+    }
+    const shouldPatchMotorways = flavor === "light" || flavor === "dark";
+    if (shouldPatchMotorways) {
+      const motorwayColors = isDark
+        ? {
+          surface: "#4DD98F",
+          surfaceCasing: "#29AD69",
+          tunnel: "#7CE8B1",
+          tunnelCasing: "#60DA9C"
+        }
+        : {
+          surface: "#3CC878",
+          surfaceCasing: "#1f8f55",
+          tunnel: "#77d9a1",
+          tunnelCasing: "#60d08e"
+        };
+      const motorwayLayerSpecs: Array<{
+        sourceId: string;
+        id: string;
+        context: RoadContext;
+        isLink: boolean;
+        color: string;
+      }> = [
+          {
+            sourceId: "roads_tunnels_link_casing",
+            id: "roads_tunnels_motorway_link_casing",
+            context: "tunnel",
+            isLink: true,
+            color: motorwayColors.tunnelCasing
+          },
+          {
+            sourceId: "roads_tunnels_highway_casing",
+            id: "roads_tunnels_motorway_casing",
+            context: "tunnel",
+            isLink: false,
+            color: motorwayColors.tunnelCasing
+          },
+          {
+            sourceId: "roads_tunnels_link",
+            id: "roads_tunnels_motorway_link",
+            context: "tunnel",
+            isLink: true,
+            color: motorwayColors.tunnel
+          },
+          {
+            sourceId: "roads_tunnels_highway",
+            id: "roads_tunnels_motorway",
+            context: "tunnel",
+            isLink: false,
+            color: motorwayColors.tunnel
+          },
+          {
+            sourceId: "roads_link_casing",
+            id: "roads_motorway_link_casing",
+            context: "surface",
+            isLink: true,
+            color: motorwayColors.surfaceCasing
+          },
+          {
+            sourceId: "roads_highway_casing_early",
+            id: "roads_motorway_casing",
+            context: "surface",
+            isLink: false,
+            color: motorwayColors.surfaceCasing
+          },
+          {
+            sourceId: "roads_link",
+            id: "roads_motorway_link",
+            context: "surface",
+            isLink: true,
+            color: motorwayColors.surface
+          },
+          {
+            sourceId: "roads_highway",
+            id: "roads_motorway",
+            context: "surface",
+            isLink: false,
+            color: motorwayColors.surface
+          },
+          {
+            sourceId: "roads_bridges_link_casing",
+            id: "roads_bridges_motorway_link_casing",
+            context: "bridge",
+            isLink: true,
+            color: motorwayColors.surfaceCasing
+          },
+          {
+            sourceId: "roads_bridges_highway_casing",
+            id: "roads_bridges_motorway_casing",
+            context: "bridge",
+            isLink: false,
+            color: motorwayColors.surfaceCasing
+          },
+          {
+            sourceId: "roads_bridges_link",
+            id: "roads_bridges_motorway_link",
+            context: "bridge",
+            isLink: true,
+            color: motorwayColors.surface
+          },
+          {
+            sourceId: "roads_bridges_highway",
+            id: "roads_bridges_motorway",
+            context: "bridge",
+            isLink: false,
+            color: motorwayColors.surface
+          }
+        ];
+      const missingSourceIds: string[] = [];
+      for (const spec of motorwayLayerSpecs) {
+        const inserted = insertDerivedRoadLayer(
+          styleLayers,
+          spec.sourceId,
+          spec.id,
+          spec.color,
+          buildMotorwayFilter(spec.context, spec.isLink)
+        );
+        if (!inserted) {
+          missingSourceIds.push(spec.sourceId);
+        }
+      }
+      if (missingSourceIds.length > 0) {
+        const uniqueMissingSourceIds = [...new Set(missingSourceIds)];
+        throw new Error(
+          `Missing expected road layer(s) for motorway patch: ${uniqueMissingSourceIds.join(", ")}`
+        );
       }
     }
     const poiLayerIdx = styleLayers.findIndex((layer) => layer.id === "pois");

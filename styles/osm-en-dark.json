@@ -669,6 +669,70 @@
       }
     },
     {
+      "id": "roads_tunnels_motorway_link_casing",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_tunnel"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway_link"
+        ],
+        [
+          "has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#60DA9C",
+        "line-dasharray": [
+          3,
+          2
+        ],
+        "line-gap-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1,
+          18,
+          11
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          12,
+          0,
+          12.5,
+          1
+        ]
+      }
+    },
+    {
       "id": "roads_tunnels_major_casing",
       "type": "line",
       "source": "osm",
@@ -754,6 +818,72 @@
       ],
       "paint": {
         "line-color": "#141414",
+        "line-dasharray": [
+          6,
+          0.5
+        ],
+        "line-gap-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          3,
+          0,
+          3.5,
+          0.5,
+          18,
+          15
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          7,
+          0,
+          7.5,
+          1,
+          20,
+          15
+        ]
+      }
+    },
+    {
+      "id": "roads_tunnels_motorway_casing",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_tunnel"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway"
+        ],
+        [
+          "!has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#60DA9C",
         "line-dasharray": [
           6,
           0.5
@@ -908,6 +1038,52 @@
       }
     },
     {
+      "id": "roads_tunnels_motorway_link",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_tunnel"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway_link"
+        ],
+        [
+          "has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#7CE8B1",
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1,
+          18,
+          11
+        ]
+      }
+    },
+    {
       "id": "roads_tunnels_major",
       "type": "line",
       "source": "osm",
@@ -975,6 +1151,56 @@
       ],
       "paint": {
         "line-color": "#292929",
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          3,
+          0,
+          6,
+          1.1,
+          12,
+          1.6,
+          15,
+          5,
+          18,
+          15
+        ]
+      }
+    },
+    {
+      "id": "roads_tunnels_motorway",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_tunnel"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway"
+        ],
+        [
+          "!has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#7CE8B1",
         "line-width": [
           "interpolate",
           [
@@ -1209,6 +1435,71 @@
       }
     },
     {
+      "id": "roads_motorway_link_casing",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "minzoom": 13,
+      "filter": [
+        "all",
+        [
+          "!has",
+          "is_tunnel"
+        ],
+        [
+          "!has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway_link"
+        ],
+        [
+          "has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#29AD69",
+        "line-gap-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1,
+          18,
+          11
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1.5
+        ]
+      }
+    },
+    {
       "id": "roads_major_casing_late",
       "type": "line",
       "source": "osm",
@@ -1388,6 +1679,56 @@
       ],
       "paint": {
         "line-color": "#3d3d3d",
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1,
+          18,
+          11
+        ]
+      }
+    },
+    {
+      "id": "roads_motorway_link",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "!has",
+          "is_tunnel"
+        ],
+        [
+          "!has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway_link"
+        ],
+        [
+          "has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#4DD98F",
         "line-width": [
           "interpolate",
           [
@@ -1671,6 +2012,71 @@
       }
     },
     {
+      "id": "roads_motorway_casing",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "maxzoom": 12,
+      "filter": [
+        "all",
+        [
+          "!has",
+          "is_tunnel"
+        ],
+        [
+          "!has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway"
+        ],
+        [
+          "!has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#29AD69",
+        "line-gap-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          3,
+          0,
+          3.5,
+          0.5,
+          18,
+          15
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          7,
+          0,
+          7.5,
+          1
+        ]
+      }
+    },
+    {
       "id": "roads_highway",
       "type": "line",
       "source": "osm",
@@ -1697,6 +2103,60 @@
       ],
       "paint": {
         "line-color": "#474747",
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          3,
+          0,
+          6,
+          1.1,
+          12,
+          1.6,
+          15,
+          5,
+          18,
+          15
+        ]
+      }
+    },
+    {
+      "id": "roads_motorway",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "!has",
+          "is_tunnel"
+        ],
+        [
+          "!has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway"
+        ],
+        [
+          "!has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#4DD98F",
         "line-width": [
           "interpolate",
           [
@@ -2346,6 +2806,67 @@
       }
     },
     {
+      "id": "roads_bridges_motorway_link_casing",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway_link"
+        ],
+        [
+          "has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#29AD69",
+        "line-gap-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1,
+          18,
+          11
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          12,
+          0,
+          12.5,
+          1.5
+        ]
+      }
+    },
+    {
       "id": "roads_bridges_minor_casing",
       "type": "line",
       "source": "osm",
@@ -2570,6 +3091,53 @@
       }
     },
     {
+      "id": "roads_bridges_motorway_link",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway_link"
+        ],
+        [
+          "has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#4DD98F",
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          13,
+          0,
+          13.5,
+          1,
+          18,
+          11
+        ]
+      }
+    },
+    {
       "id": "roads_bridges_major",
       "type": "line",
       "source": "osm",
@@ -2668,6 +3236,69 @@
       }
     },
     {
+      "id": "roads_bridges_motorway_casing",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "minzoom": 12,
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway"
+        ],
+        [
+          "!has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#29AD69",
+        "line-gap-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          3,
+          0,
+          3.5,
+          0.5,
+          18,
+          15
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          7,
+          0,
+          7.5,
+          1,
+          20,
+          15
+        ]
+      }
+    },
+    {
       "id": "roads_bridges_highway",
       "type": "line",
       "source": "osm",
@@ -2690,6 +3321,56 @@
       ],
       "paint": {
         "line-color": "#474747",
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1.6
+          ],
+          [
+            "zoom"
+          ],
+          3,
+          0,
+          6,
+          1.1,
+          12,
+          1.6,
+          15,
+          5,
+          18,
+          15
+        ]
+      }
+    },
+    {
+      "id": "roads_bridges_motorway",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "roads",
+      "filter": [
+        "all",
+        [
+          "has",
+          "is_bridge"
+        ],
+        [
+          "==",
+          "kind",
+          "highway"
+        ],
+        [
+          "==",
+          "kind_detail",
+          "motorway"
+        ],
+        [
+          "!has",
+          "is_link"
+        ]
+      ],
+      "paint": {
+        "line-color": "#4DD98F",
         "line-width": [
           "interpolate",
           [
