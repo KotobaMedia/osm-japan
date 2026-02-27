@@ -2344,6 +2344,8 @@
         ]
       },
       "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
         "visibility": "visible"
       }
     },
@@ -2405,6 +2407,8 @@
         ]
       },
       "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
         "visibility": "visible"
       }
     },
@@ -2471,6 +2475,10 @@
           18,
           13
         ]
+      },
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round"
       }
     },
     {
@@ -2524,6 +2532,8 @@
         ]
       },
       "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
         "visibility": "visible"
       }
     },
@@ -2578,6 +2588,8 @@
         ]
       },
       "layout": {
+        "line-cap": "butt",
+        "line-join": "round",
         "visibility": "visible"
       }
     },
@@ -2637,6 +2649,10 @@
           18,
           13
         ]
+      },
+      "layout": {
+        "line-cap": "butt",
+        "line-join": "round"
       }
     },
     {

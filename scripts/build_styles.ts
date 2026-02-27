@@ -110,6 +110,10 @@ for (const lang of languages) {
         ["!=", "highspeed", "yes"]
       ];
       const shinkansenFilter = ["==", "highspeed", "yes"];
+      const jrRailLayout = {
+        "line-cap": "butt",
+        "line-join": "round"
+      };
       const railLayers = [
         {
           id: "roads_rail_generic",
@@ -145,6 +149,7 @@ for (const lang of languages) {
             "line-width": widthExpr(1.5, 13)
           },
           layout: {
+            ...jrRailLayout,
             visibility: "visible"
           }
         },
@@ -159,6 +164,7 @@ for (const lang of languages) {
             "line-width": widthExpr(1, 9)
           },
           layout: {
+            ...jrRailLayout,
             visibility: "visible"
           }
         },
@@ -172,6 +178,9 @@ for (const lang of languages) {
             "line-dasharray": ["literal", [5, 5]],
             "line-color": railFillColor,
             "line-width": widthExpr(1.5, 13)
+          },
+          layout: {
+            ...jrRailLayout
           }
         },
         {
@@ -185,6 +194,7 @@ for (const lang of languages) {
             "line-width": widthExpr(1.5, 13)
           },
           layout: {
+            ...jrRailLayout,
             visibility: "visible"
           }
         },
@@ -199,6 +209,7 @@ for (const lang of languages) {
             "line-width": widthExpr(1, 9)
           },
           layout: {
+            ...jrRailLayout,
             visibility: "visible"
           }
         },
@@ -212,6 +223,9 @@ for (const lang of languages) {
             "line-dasharray": ["literal", [8, 8]],
             "line-color": shinkansenColor,
             "line-width": widthExpr(1.5, 13)
+          },
+          layout: {
+            ...jrRailLayout
           }
         },
       ];
