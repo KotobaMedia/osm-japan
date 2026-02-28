@@ -93,9 +93,10 @@ for (const lang of languages) {
       const railFilter = (...conditions: unknown[]) => [
         "all",
         ["==", "kind", "rail"],
-        ["in", "kind_detail", "rail", "subway"],
         ...conditions
       ];
+      const mainRailKindDetailFilter = ["in", "kind_detail", "rail", "subway"];
+      const genericRailKindDetailFilter = ["in", "kind_detail", "rail", "subway", "monorail", "tram"];
       const nonServiceFilter = ["!has", "service"];
       const serviceFilter = ["has", "service"];
       const jrFilter = ["==", "is_jr", true];
@@ -120,7 +121,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, genericFilter),
+          filter: railFilter(genericRailKindDetailFilter, nonServiceFilter, genericFilter),
           paint: {
             "line-color": railGenericColor,
             "line-width": widthExpr(0.3, 10)
@@ -132,7 +133,7 @@ for (const lang of languages) {
           source: "osm",
           "source-layer": "roads",
           minzoom: 14,
-          filter: railFilter(serviceFilter, genericFilter),
+          filter: railFilter(genericRailKindDetailFilter, serviceFilter, genericFilter),
           paint: {
             "line-color": railGenericColor,
             "line-width": widthExpr(0.3, 4.5)
@@ -143,7 +144,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
+          filter: railFilter(mainRailKindDetailFilter, nonServiceFilter, jrFilter, nonHighspeedFilter),
           paint: {
             "line-color": railFillColor,
             "line-width": widthExpr(1.5, 13)
@@ -158,7 +159,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
+          filter: railFilter(mainRailKindDetailFilter, nonServiceFilter, jrFilter, nonHighspeedFilter),
           paint: {
             "line-color": railBgColor,
             "line-width": widthExpr(1, 9)
@@ -173,7 +174,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, jrFilter, nonHighspeedFilter),
+          filter: railFilter(mainRailKindDetailFilter, nonServiceFilter, jrFilter, nonHighspeedFilter),
           paint: {
             "line-dasharray": ["literal", [5, 5]],
             "line-color": railFillColor,
@@ -188,7 +189,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, jrFilter, shinkansenFilter),
+          filter: railFilter(mainRailKindDetailFilter, nonServiceFilter, jrFilter, shinkansenFilter),
           paint: {
             "line-color": shinkansenColor,
             "line-width": widthExpr(1.5, 13)
@@ -203,7 +204,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, jrFilter, shinkansenFilter),
+          filter: railFilter(mainRailKindDetailFilter, nonServiceFilter, jrFilter, shinkansenFilter),
           paint: {
             "line-color": railBgColor,
             "line-width": widthExpr(1, 9)
@@ -218,7 +219,7 @@ for (const lang of languages) {
           type: "line",
           source: "osm",
           "source-layer": "roads",
-          filter: railFilter(nonServiceFilter, jrFilter, shinkansenFilter),
+          filter: railFilter(mainRailKindDetailFilter, nonServiceFilter, jrFilter, shinkansenFilter),
           paint: {
             "line-dasharray": ["literal", [8, 8]],
             "line-color": shinkansenColor,

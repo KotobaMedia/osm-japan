@@ -2195,7 +2195,9 @@
           "in",
           "kind_detail",
           "rail",
-          "subway"
+          "subway",
+          "monorail",
+          "tram"
         ],
         [
           "!has",
@@ -2249,7 +2251,9 @@
           "in",
           "kind_detail",
           "rail",
-          "subway"
+          "subway",
+          "monorail",
+          "tram"
         ],
         [
           "has",
